@@ -7,9 +7,33 @@ const Profile = props => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [thoughts, setThoughts] = useState([{
     username: userParam,
-    createdAt: '', 
+    createdAt: '',
     thought: '',
   }]);
+
+  /*
+   Notice a similar pattern here compared to the useEffect hook in the Home component. Namely, we do the following things:
+   Use the userParam sourced from the React Router to retain the username from the ThoughtList component.
+   Pass the userParam to the database in the URL.
+   Set the state with the database response.
+   Set the dependency array in the hook to reflect the dependency for the username with userParam.
+ */
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/users/${userParam}`);
+        const data = await res.json();
+        console.log(data);
+        setThoughts([...data]);
+        setIsLoaded(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [userParam]);
+
 
   return (
     <div>
@@ -21,10 +45,10 @@ const Profile = props => {
 
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-9">
-        {!isLoaded ? (
+          {!isLoaded ? (
             <div>Loading...</div>
           ) : (
-          <ThoughtList thoughts={thoughts} title={`${userParam}'s thoughts...`} />
+            <ThoughtList thoughts={thoughts} title={`${userParam}'s thoughts...`} />
           )}
         </div>
       </div>
