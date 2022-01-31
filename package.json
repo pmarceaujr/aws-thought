@@ -1,7 +1,7 @@
 {
   "name": "aws-thought",
   "version": "1.0.0",
-  "description": "",
+  "description": "Expanding my skills into AWS",
   "main": "server/server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -14,9 +14,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "if-env": "^1.0.4"
+    "aws-sdk": "^2.1066.0",
+    "express": "^4.17.2",
+    "if-env": "^1.0.4",
+    "uuid": "^8.3.2",
+    "watch": "^1.0.2"
   },
   "devDependencies": {
     "concurrently": "^5.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pmarceaujr/aws-thoughts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmarceaujr/aws-thoughts/issues"
+  },
+  "homepage": "https://github.com/pmarceaujr/aws-thoughts#readme"
 }
