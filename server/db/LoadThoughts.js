@@ -11,9 +11,14 @@ const fs = require('fs');
 //as arguments and return native JavaScript types. This constructor helps map objects, 
 //which reduces impedance mismatching and speeds up the development process. 
 //We'll be using this class for most of the database calls in this project.
+/*
 AWS.config.update({
     region: "us-east-2",
     endpoint: "http://localhost:8000"
+});
+*/
+AWS.config.update({
+    region: "us-east-2"
 });
 const dynamodb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
 
