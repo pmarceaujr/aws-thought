@@ -77,19 +77,21 @@ router.get('/users/:username', (req, res) => {
         which will be ascending. The sort key was assigned to the createdAt attribute when we first created the table. Because we want the most recent posts on top, 
         we set the ScanIndexForward property to false so that the order is descending.
     */
+
     const params = {
         TableName: table,
         KeyConditionExpression: "#un = :user",
         ExpressionAttributeNames: {
             "#un": "username",
             "#ca": "createdAt",
-            "#th": "thought"
+            "#th": "thought",
+            "#img": "image"    // add the image attribute alias
         },
         ExpressionAttributeValues: {
             ":user": req.params.username
         },
-        ProjectionExpression: "#th, #ca",
-        ScanIndexForward: false
+        ProjectionExpression: "#un, #th, #ca, #img", // add the image to the database response
+        ScanIndexForward: false  // false makes the order descending(true is default)
     };
     dynamodb.query(params, (err, data) => {
         if (err) {
@@ -112,13 +114,14 @@ when we want to render them in the profile page.
 */
 // Create new user at /api/users
 router.post('/users', (req, res) => {
-    console.log(" are we herer")
+    console.log(" are we here")
     const params = {
         TableName: table,
         Item: {
             "username": req.body.username,
             "createdAt": Date.now(),
-            "thought": req.body.thought
+            "thought": req.body.thought,
+            "image": req.body.image  // add new image attribute
         }
     };
     // database call

@@ -14,11 +14,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // app.use(require('./routes'));
-app.use('/api/', userRoutes);
+//app.use('/api/', userRoutes);
 
 
 //
-// app.use(require('./routes'));
+//app.use(require('./routes'));
 app.use('/api/', userRoutes);
 app.use('/api/', imageRoutes); // add this route for image upload
 
