@@ -112,6 +112,7 @@ when we want to render them in the profile page.
 */
 // Create new user at /api/users
 router.post('/users', (req, res) => {
+    console.log(" are we herer")
     const params = {
         TableName: table,
         Item: {

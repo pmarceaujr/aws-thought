@@ -46,6 +46,7 @@ we send the data retrieved from S3 back to the client. The data will contain the
 bucket name, file name, and more. Now that the route is complete, it should look like the following statement:
 */
 router.post('/image-upload', upload, (req, res) => {
+    console.log("DO we get here")
     console.log("post('/api/image-upload'", req.file);
     const params = paramsConfig(req.file);
     s3.upload(params, (err, data) => {
@@ -58,7 +59,4 @@ router.post('/image-upload', upload, (req, res) => {
 });
 
 
-
-
-
-module.exports = router
+module.exports = router;
