@@ -21,7 +21,8 @@ const params = fileName => {
     const imageParams = {
         Bucket: 'bootcamp-user-images-f86aeb7c-130b-4a2a-8ab3-8cb27fc256df',
         Key: `${uuidv4()}.${fileType}`,
-        Body: fileName.buffer
+        Body: fileName.buffer,
+        ACL: 'public-read' // allow read access to this file
     };
 
     return imageParams;
