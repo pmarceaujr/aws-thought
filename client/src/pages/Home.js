@@ -20,7 +20,9 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/users');
+        console.log("What's wrong?")
+        //const res = await fetch('http://3.144.194.67/api/users');
+        const res = await fetch('/api/users'); //
         const jsonData = await res.json();
         // sort the array by createdAt property ordered by descending values
         const data = jsonData.sort((a, b) => (a.createdAt < b.createdAt) ? 1 : -1);

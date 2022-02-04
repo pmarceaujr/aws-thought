@@ -84,22 +84,28 @@ This will run a local copy of dynamoDB
   - The preceding configuration file is known as a .conf file type. These are used to store configuration settings for operating systems and server processes. In the preceding .conf, the nginx server is listening on port 80 for an internet request. We then proxy the endpoints in the application at the / and /api/ locations, for the front end and back end respectively.
   - Also notice that we're serving the production build of the application.
   - Next we need to restart the nginx server by running the following command:
-    - `systemctl restart nginx`
+    - `sudo systemctl restart nginx`
   - Run the following command to configure the nginx server to automatically launch whenever the EC2 instance is started or booted:
     - `systemctl enable nginx`
 
 - Modify the API Calls: We'll use the text editor nano to modify the fetch requests in the UI components to target the correct path.
-  Currently, we know of the following three access points that connect the client to the database service. The three API fetch calls occur in the `Home` component, to fetch all the users' thoughts; in the `ThoughtForm` component, to create a new thought; and in the `Profile` component, to retrieve a single user's thoughts. - Run the following commands to modify the three components: - `sudo nano /opt/aws-thoughts/client/src/pages/Home.js` - ` const res = await fetch('http://3.22.57.177/api/users');` - `sudo nano /opt/aws-thoughts/client/src/pages/Profile.js` - `` const res = await fetch(`http://3.144.194.67/api/users/${userParam}`); `` - `sudo nano /opt/aws-thoughts/client/src/components/ThoughtForm/index.js` - `const res = await fetch('http://3.144.194.67/api/image-upload', {`
+  Currently, we know of the following three access points that connect the client to the database service. The three API fetch calls occur in the `Home` component, to fetch all the users' thoughts; in the `ThoughtForm` component, to create a new thought; and in the `Profile` component, to retrieve a single user's thoughts. - Run the following commands to modify the three components:
+  - `sudo nano /opt/aws-thoughts/client/src/pages/Home.js`
+  - ` const res = await fetch('http://3.22.57.177/api/users');`
+  - `sudo nano /opt/aws-thoughts/client/src/pages/Profile.js`
+  - `` const res = await fetch(`http://3.144.194.67/api/users/${userParam}`); ``
+  - `sudo nano /opt/aws-thoughts/client/src/components/ThoughtForm/index.js`
+  - `const res = await fetch('http://3.144.194.67/api/image-upload', {`
 - Now that the source code modifications are complete, navigate to the aws-thought folder to install the application's dependencies, by typing the following commands:
   - `cd /opt/aws-thought`
   - `npm install `
 - Build and Run a Production Version of the App: Once the client and server dependencies have successfully been installed and set up, we can build a production version of the React application. Navigate to the client directory, then run the following command:
-  - `npm run build`
+  - `sudo npm run build`
   - It will take a few minutes to create a compressed version of the React application and place it in the build folder of the client.
 - Once this step has completed, we'll start the React application. We could use the command `npm start`. However, to keep the application running even after we've logged out of the server, we must use a process manager for production Node.js applications, called `pm2`.
 - Install the process manager globally by running the following command:
-  - `npm install pm2 -g #from the client directory`
-  - `pm2 start node_modules/react-scripts/scripts/start.js --name "aws-thought" `
+  - `sudo npm install pm2 -g #from the client directory`
+  - `sudo pm2 start node_modules/react-scripts/scripts/start.js --name "aws-thought" `
   - On a successful start, we'll see a monitor log that resembles the following image:
 
 | id  | name         | namespace | version | mode | pid   | uptime | status | cpu |
@@ -107,10 +113,18 @@ This will run a local copy of dynamoDB
 | 0   | aws-thoughts | default   | 5.0.0   | fork | 15776 | 0s     | online | 0%  |
 
 - Now if we enter the Public IPv4 address, we can see the UI of the Deep Thoughts application. Although the data isn't populating, we can see that `pm2` and the `nginx` server are delivering the application to the internet. Next we'll start the back end of the application so that the data from the DynamoDB service can render to the browser. Run the following command from the `aws-thought/server` location:
-  - `pm2 start server.js #must be in server directory`
+  - `sudo pm2 start server.js #must be in server directory`
   - On a successful start, we'll see a monitor log that resembles the following image:
 
 | id  | name         | namespace | version | mode | pid   | uptime | status | cpu |
 | --- | ------------ | --------- | ------- | ---- | ----- | ------ | ------ | --- |
 | 0   | aws-thoughts | default   | 5.0.0   | fork | 15776 | 0s     | online | 0%  |
 | 0   | server       | default   | 1.0.0   | fork | 15776 | 0s     | online | 0%  |
+
+</br>
+</br>
+
+# Final Notes:
+
+- ## Need to rebuild when code changes.
+- ## Almost everything needs to be done with sudo unless you use `sudo su -`
